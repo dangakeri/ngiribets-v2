@@ -4,7 +4,7 @@ import Router from "next/router";
 import { FaUserCircle, FaArrowRight, FaSignOutAlt } from "react-icons/fa";
 
 import Footer from "../components/footer";
-import Modal from "../components/modal";
+import Modal from "../components/Modal";
 import UserLinkModal from "../components/linkModal";
 import { useUser } from "../contexts/UserContext";
 import NotificationListener from "../components/listener";

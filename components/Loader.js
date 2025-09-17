@@ -13,7 +13,7 @@ export default function Loader() {
           height={40}
           priority
         />
-        <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-[#a21cf0] border-t-transparent rounded-full animate-spin"></div>
       </div>
     </div>
   );
