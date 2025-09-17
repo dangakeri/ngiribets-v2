@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-[#092335] text-white;
+}
+
+@layer base {
+  :root {
+    --primary: #a21cf0; /* Purple primary */
+    --secondary: #303d4a; /* from your HSL 213 27% 26% */
+    --textGrey: #ffffff;
+    --bgBody: #1d2933; /* from 210 31% 13% */
+
+    --background: var(--bgBody);
+    --foreground: var(--textGrey);
+
+    --card: var(--bgBody);
+    --card-foreground: var(--textGrey);
+
+    --popover: var(--bgBody);
+    --popover-foreground: var(--textGrey);
+
+    --primary-foreground: #ffffff;
+    --secondary-foreground: #ffffff;
+
+    --muted: #2a2f36; /* 210 20% 20% */
+    --muted-foreground: #b3b3b3; /* 210 10% 70% */
+
+    --accent: #2a2f36;
+    --accent-foreground: #ffffff;
+
+    --destructive: #e63946; /* 0 84.2% 60.2% */
+    --destructive-foreground: #fafafa;
+
+    --border: #333b44; /* 210 20% 25% */
+    --input: #333b44;
+    --ring: #a21cf0;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: var(--bgBody);
+    --foreground: var(--textGrey);
+
+    --card: var(--bgBody);
+    --card-foreground: var(--textGrey);
+
+    --popover: var(--bgBody);
+    --popover-foreground: var(--textGrey);
+
+    --primary: #a21cf0;
+    --secondary: #303d4a;
+    --textGrey: #ffffff;
+    --bgBody: #1d2933;
+
+    --primary-foreground: #ffffff;
+    --secondary-foreground: #ffffff;
+
+    --muted: #2a2f36;
+    --muted-foreground: #b3b3b3;
+
+    --accent: #2a2f36;
+    --accent-foreground: #ffffff;
+
+    --destructive: #9b1c1c; /* from 0 62.8% 30.6% */
+    --destructive-foreground: #fefefe;
+
+    --border: #333b44;
+    --input: #333b44;
+    --ring: #a21cf0;
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
