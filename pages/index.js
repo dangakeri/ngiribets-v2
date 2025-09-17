@@ -86,14 +86,15 @@ export default function Home() {
       <IconScrollableArea />
       <BannerCarousel banners={banners} onBannerClick={() => {}} />
       <main className="mb-16">
-        <div className="w-full h-[80vh] mt-4">
+        <div className="w-full h-[100vh] mt-4">
           <iframe
             src={funModeLaunchUrl}
             title="Sports"
             className="w-full h-full rounded-lg shadow-lg border-0"
             allowFullScreen
           />
-        </div>
+        </div>{" "}
+        <FooterContent />
       </main>
       <Footer />
     </div>
