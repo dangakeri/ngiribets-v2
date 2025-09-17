@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import { FaArrowLeft } from "react-icons/fa";
 import Loader from "../components/loader";
-import Modal from "../components/modal";
+import Modal from "../components/Modal";
 
 export default function IframePage() {
   const router = useRouter();

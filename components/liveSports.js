@@ -82,7 +82,7 @@ const LiveSports = ({ league, homeTeam, awayTeam, score, half, odds }) => {
             onClick={() => setClickedIndex(index)}
             className={`px-4 py-2 rounded text-sm font-medium transition ${
               clickedIndex === index
-                ? "bg-orange-500 text-white"
+                ? "bg-[#a21cf0] text-white"
                 : "bg-[#092b42] text-white hover:bg-[#123c5c]"
             } ${odd.value > 50 ? "text-green-400" : ""}`}
           >
