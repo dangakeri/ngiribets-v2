@@ -46,8 +46,8 @@ const BannerCarousel = ({ banners, onBannerClick }) => {
                     src={banner.image}
                     alt={banner.alt}
                     width={1200}
-                    height={192}
-                    className="w-full h-48 object-cover"
+                    height={160}
+                    className="w-full h-40 object-fill"
                     priority={index === 0 && i === 0}
                   />
                 </div>

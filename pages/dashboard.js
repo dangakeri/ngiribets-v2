@@ -63,6 +63,7 @@ export default function Dashboard() {
     { image: "/images/aviatrix.avif", alt: "Banner 3" },
     { image: "/images/royale.avif", alt: "Banner 4" },
     { image: "/images/rains.avif", alt: "Banner 5" },
+    { image: "/images/rains.avif", alt: "Banner 5" },
   ];
 
   return (
