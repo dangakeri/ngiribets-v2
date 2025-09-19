@@ -7,8 +7,15 @@ const icons = [
     type: "image",
     src: "/images/football.svg",
     name: "Sports",
-    path: "/api/sport_games",
-    actionData: { ref: "sports", action: "play", provider: "sports" },
+    path: "/dashboard",
+    // actionData: { ref: "sports", action: "play", provider: "sports" },
+  },
+  {
+    type: "image",
+    src: "/images/aviator.png",
+    name: "Aviator",
+    path: "/api/avt",
+    actionData: { ref: "aviator", action: "play", provider: "avt" },
   },
   { type: "image", src: "/images/top.svg", name: "Top Games", path: "/top" },
   { type: "image", src: "/images/imoon.svg", name: "Crash", path: "/crash" },
@@ -30,10 +37,30 @@ const icons = [
 
 const IconScrollableArea = () => {
   const router = useRouter();
-
   const handleClick = async (item) => {
-    if (item.actionData) {
-      try {
+    try {
+      if (item.name === "Aviator") {
+        // Special case for Aviator
+        const token = localStorage.getItem("token");
+        const response = await fetch(`${API_URL}/api/avt`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(item.actionData),
+        });
+
+        if (!response.ok) throw new Error("Network response was not ok");
+
+        const { iframeSrc } = await response.json();
+
+        router.push({
+          pathname: "/games",
+          query: { iframeSrc },
+        });
+      } else if (item.actionData) {
+        // Default flow for other API-driven icons
         const token = localStorage.getItem("token");
         const response = await fetch(`${API_URL}/api/sport_games`, {
           method: "POST",
@@ -52,13 +79,43 @@ const IconScrollableArea = () => {
           pathname: "/games",
           query: { iframeSrc },
         });
-      } catch (error) {
-        console.error("Error fetching the iframe source:", error);
+      } else {
+        // Normal navigation
+        router.push(item.path);
       }
-    } else {
-      router.push(item.path);
+    } catch (error) {
+      console.error("Error fetching the iframe source:", error);
     }
   };
+
+  // const handleClick = async (item) => {
+  //   if (item.actionData) {
+  //     try {
+  //       const token = localStorage.getItem("token");
+  //       const response = await fetch(`${API_URL}/api/sport_games`, {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //         body: JSON.stringify(item.actionData),
+  //       });
+
+  //       if (!response.ok) throw new Error("Network response was not ok");
+
+  //       const { iframeSrc } = await response.json();
+
+  //       router.push({
+  //         pathname: "/games",
+  //         query: { iframeSrc },
+  //       });
+  //     } catch (error) {
+  //       console.error("Error fetching the iframe source:", error);
+  //     }
+  //   } else {
+  //     router.push(item.path);
+  //   }
+  // };
 
   return (
     <div className=" bg-[#092335] mt-4 py-2 overflow-x-auto no-scrollbar">

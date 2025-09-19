@@ -247,6 +247,10 @@ const Modal = ({ isOpen, onClose, defaultTab = "deposit" }) => {
                 <div className="flex items-center gap-2">
                   <FaCheckCircle className="text-[#a21cf0] text-sm" />
                   <span>Minimum withdrawal: KES 100</span>
+                </div>{" "}
+                <div className="flex items-center gap-2">
+                  <FaCheckCircle className="text-[#a21cf0] text-sm" />
+                  <span>Subject to 5% Tax.</span>
                 </div>
               </div>
             </form>
