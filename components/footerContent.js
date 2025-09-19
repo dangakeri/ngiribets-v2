@@ -28,7 +28,7 @@ function FooterContent() {
           Fastbook Solutions Limited trading as NgiriBets is licensed and
           regulated by the Betting Control and Licensing Board of Kenya (BCLB)
           under the Betting, Lotteries, and Gaming Act, Cap 131, Laws of Kenya.
-          License Number BK 0000803.
+          License Number BK - 0001265.
         </p>
 
         {/* 18+ Divider */}
@@ -42,7 +42,7 @@ function FooterContent() {
           Ngiribets is dedicated to responsible gaming and a safe betting
           environment. Underage gambling is strictly prohibited, and players
           must be at least 18 years old to participate. Please gamble
-          responsibly and seek support if needed. For more information, visit{" "}
+          responsibly and seek support if needed. For more information, visit
           <Link
             href="/responsible-gaming"
             className="text-primary font-medium hover:underline"
@@ -92,7 +92,7 @@ function Socials() {
     <div className="flex gap-4 sm:gap-6 mt-4 justify-center items-center flex-wrap">
       {/* Facebook */}
       <a
-        href="https://www.facebook.com/ngiribets"
+        href="https://www.facebook.com/share/18wutEaSge/?mibextid=qi2Omg"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -110,7 +110,7 @@ function Socials() {
 
       {/* X / Twitter */}
       <a
-        href="https://x.com/ngiribets"
+        href="https://x.com/ngiribets_ke?s=09"
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -128,7 +128,7 @@ function Socials() {
 
       {/* Instagram */}
       <a
-        href="https://instagram.com/ngiribets"
+        href="https://www.instagram.com/ngiribets_ke?igsh=MW95N2d2dHBvMjJscQ=="
         target="_blank"
         rel="noopener noreferrer"
       >
@@ -146,7 +146,7 @@ function Socials() {
 
       {/* TikTok */}
       <a
-        href="https://tiktok.com/@ngiribets"
+        href="https://www.tiktok.com/@ngiribets_ke?_t=ZM-8uo0BY9OLpv&_r=1"
         target="_blank"
         rel="noopener noreferrer"
       >
