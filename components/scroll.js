@@ -88,35 +88,6 @@ const IconScrollableArea = () => {
     }
   };
 
-  // const handleClick = async (item) => {
-  //   if (item.actionData) {
-  //     try {
-  //       const token = localStorage.getItem("token");
-  //       const response = await fetch(`${API_URL}/api/sport_games`, {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //         body: JSON.stringify(item.actionData),
-  //       });
-
-  //       if (!response.ok) throw new Error("Network response was not ok");
-
-  //       const { iframeSrc } = await response.json();
-
-  //       router.push({
-  //         pathname: "/games",
-  //         query: { iframeSrc },
-  //       });
-  //     } catch (error) {
-  //       console.error("Error fetching the iframe source:", error);
-  //     }
-  //   } else {
-  //     router.push(item.path);
-  //   }
-  // };
-
   return (
     <div className=" bg-[#092335] mt-4 py-2 overflow-x-auto no-scrollbar">
       {/* 👇 gap-3 adds spacing between buttons */}

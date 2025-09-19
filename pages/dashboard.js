@@ -57,13 +57,20 @@ export default function Dashboard() {
     launchSports();
   }, []);
 
+  // const banners = [
+  //   { image: "/images/aero.avif", alt: "Banner 1" },
+  //   { image: "/images/refer.avif", alt: "Banner 2" },
+  //   { image: "/images/aviatrix.avif", alt: "Banner 3" },
+  //   { image: "/images/royale.avif", alt: "Banner 4" },
+  //   { image: "/images/rains.avif", alt: "Banner 5" },
+  //   { image: "/images/rains.avif", alt: "Banner 5" },
+  // ];
+
   const banners = [
-    { image: "/images/aero.avif", alt: "Banner 1" },
-    { image: "/images/refer.avif", alt: "Banner 2" },
-    { image: "/images/aviatrix.avif", alt: "Banner 3" },
-    { image: "/images/royale.avif", alt: "Banner 4" },
-    { image: "/images/rains.avif", alt: "Banner 5" },
-    { image: "/images/rains.avif", alt: "Banner 5" },
+    { image: "/images/33.avif", alt: "Banner 1" },
+    { image: "/images/77.avif", alt: "Banner 2" },
+    { image: "/images/44.avif", alt: "Banner 3" },
+    { image: "/images/rains.avif", alt: "Banner 4" },
   ];
 
   return (
