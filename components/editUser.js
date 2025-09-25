@@ -81,7 +81,7 @@ const EditModal = ({
   return (
     <div className="modal-overlay fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
       <div className="bg-[#092335] rounded-lg shadow-xl p-6 w-full max-w-md border border-[#1f3547]">
-        <h4 className="text-lg font-bold mb-4 text-[#38bdf8]">
+        <h4 className="text-lg font-bold mb-4 text-[#a21cf0]">
           ✏️ Edit User Data
         </h4>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -97,7 +97,7 @@ const EditModal = ({
               onChange={handleChangeBalance}
               placeholder="Enter balance"
               required
-              className="mt-1 block w-full rounded-md border border-[#1f3547] bg-[#0f2d46] text-white px-3 py-2 text-sm shadow-sm focus:border-[#38bdf8] focus:ring focus:ring-[#38bdf8]/30"
+              className="mt-1 block w-full rounded-md border border-[#1f3547] bg-[#0f2d46] text-white px-3 py-2 text-sm shadow-sm focus:border-[#a21cf0] focus:ring focus:ring-[#a21cf0]/30"
             />
           </div>
 
@@ -113,7 +113,7 @@ const EditModal = ({
               onChange={handleChangeLimit}
               placeholder="Enter withdrawal limit"
               required
-              className="mt-1 block w-full rounded-md border border-[#1f3547] bg-[#0f2d46] text-white px-3 py-2 text-sm shadow-sm focus:border-[#38bdf8] focus:ring focus:ring-[#38bdf8]/30"
+              className="mt-1 block w-full rounded-md border border-[#1f3547] bg-[#0f2d46] text-white px-3 py-2 text-sm shadow-sm focus:border-[#a21cf0] focus:ring focus:ring-[#a21cf0]/30"
             />
           </div>
 
@@ -121,7 +121,7 @@ const EditModal = ({
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 rounded-md bg-[#38bdf8] hover:bg-[#2aa8d4] text-white font-semibold transition disabled:opacity-50"
+            className="w-full py-2 px-4 rounded-md bg-[#a21cf0] hover:bg-[#2aa8d4] text-white font-semibold transition disabled:opacity-50"
           >
             {loading ? "Saving..." : "Save Changes"}
           </button>

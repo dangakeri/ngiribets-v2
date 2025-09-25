@@ -56,7 +56,7 @@ const Transactions = () => {
 
   return (
     <div className="min-h-screen bg-[#092335] text-white p-6">
-      <h1 className="text-2xl font-bold text-[#38bdf8] mb-6">
+      <h1 className="text-2xl font-bold text-[#a21cf0] mb-6">
         💳 Transactions for {phone}
       </h1>
 

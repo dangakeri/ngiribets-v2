@@ -137,7 +137,7 @@ export default function UserDetails({ id }) {
 
       {/* User Info Card */}
       <div className="bg-[#0f2d46] shadow-md rounded-lg p-6 mb-8 border border-[#333b44]">
-        <h4 className="text-2xl font-bold mb-4 text-[#38bdf8]">User Details</h4>
+        <h4 className="text-2xl font-bold mb-4 text-[#a21cf0]">User Details</h4>
         {user && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-300">
             <p>

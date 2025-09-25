@@ -80,7 +80,7 @@ const Modal = ({ isOpen, onClose, phone }) => {
     <div className="modal-overlay fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
       <div className="bg-[#092335] rounded-lg shadow-xl w-full max-w-md p-6 border border-[#1f3547] relative">
         {/* Title */}
-        <h4 className="text-lg font-bold mb-4 text-[#38bdf8]">💰 Deposit</h4>
+        <h4 className="text-lg font-bold mb-4 text-[#a21cf0]">💰 Deposit</h4>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -90,12 +90,12 @@ const Modal = ({ isOpen, onClose, phone }) => {
             value={depositAmount}
             onChange={handleChange}
             placeholder="Enter deposit amount"
-            className="w-full border border-[#1f3547] bg-[#0f2d46] text-white rounded-md px-3 py-2 text-sm focus:ring focus:ring-[#38bdf8]/30 focus:border-[#38bdf8] outline-none"
+            className="w-full border border-[#1f3547] bg-[#0f2d46] text-white rounded-md px-3 py-2 text-sm focus:ring focus:ring-[#a21cf0]/30 focus:border-[#a21cf0] outline-none"
             required
           />
           <button
             type="submit"
-            className="w-full bg-[#38bdf8] hover:bg-[#2aa8d4] text-white py-2 px-4 rounded-md text-sm font-semibold transition disabled:opacity-50"
+            className="w-full bg-[#a21cf0] hover:bg-[#2aa8d4] text-white py-2 px-4 rounded-md text-sm font-semibold transition disabled:opacity-50"
             disabled={loading}
           >
             {loading ? "Processing..." : "Deposit"}

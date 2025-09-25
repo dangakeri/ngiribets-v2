@@ -58,7 +58,7 @@ const Transactions = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 bg-[#092335] min-h-screen text-white">
-      <h1 className="text-2xl font-bold mb-6 text-[#38bdf8]">
+      <h1 className="text-2xl font-bold mb-6 text-[#a21cf0]">
         🎮 Plays for {phone}
       </h1>
 
