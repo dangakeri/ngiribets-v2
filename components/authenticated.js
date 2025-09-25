@@ -5,6 +5,7 @@ import Link from "next/link";
 import Modal from "./Modal";
 import NotificationListener from "../components/listener";
 import { useUser } from "../contexts/UserContext";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const { user } = useUser();
@@ -46,6 +47,13 @@ const Header = () => {
           >
             Deposit
           </button>
+          {/* Profile icon (desktop only) */}
+          <Link
+            href="/profile"
+            className="hidden md:flex items-center justify-center text-white hover:text-[#a21cf0] transition"
+          >
+            <FaUserCircle size={24} />
+          </Link>
 
           {/* Modal */}
           <Modal isOpen={isModalOpen} onClose={closeModal} />

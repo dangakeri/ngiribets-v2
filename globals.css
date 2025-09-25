@@ -11,7 +11,7 @@ body {
     --primary: #a21cf0; /* Purple primary */
     --secondary: #303d4a; /* from your HSL 213 27% 26% */
     --textGrey: #ffffff;
-    --bgBody: #1d2933; /* from 210 31% 13% */
+    --bgBody: #092335; /* from 210 31% 13% */
 
     --background: var(--bgBody);
     --foreground: var(--textGrey);

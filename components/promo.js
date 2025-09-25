@@ -45,7 +45,7 @@ const Modal = ({ onClose }) => {
     <div className="fixed inset-0 bg-black/60 flex justify-center items-center z-50">
       <div
         ref={modalRef}
-        className="relative bg-white dark:bg-gray-900 rounded-lg shadow-lg max-w-lg w-11/12 p-3"
+        className="relative bg-background dark:bg-gray-900 rounded-lg shadow-lg max-w-lg w-11/12 p-3"
       >
         {/* Close Button */}
         <button

@@ -3,18 +3,13 @@ import axios from "axios";
 import { useRouter } from "next/router";
 
 import { API_URL } from "../../utils/config";
-import Modal from "../../components/adminDeposit"; // Import Modal component
-import EditModal from "../../components/editUser"; // Import EditModal
+import Modal from "../../components/adminDeposit";
+import EditModal from "../../components/editUser";
 import CustomNotification from "../../components/notification";
 
 export async function getServerSideProps(context) {
   const { id } = context.params;
-
-  return {
-    props: {
-      id,
-    },
-  };
+  return { props: { id } };
 }
 
 export default function UserDetails({ id }) {
@@ -23,13 +18,12 @@ export default function UserDetails({ id }) {
   const [error, setError] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
-  const router = useRouter();
   const [notification, setNotification] = useState({ message: "", type: "" });
+  const router = useRouter();
 
   useEffect(() => {
     const checkAuthAndFetchData = async () => {
       const token = localStorage.getItem("token");
-
       if (!token) {
         router.push("/login");
         return;
@@ -39,7 +33,6 @@ export default function UserDetails({ id }) {
         const response = await axios.get(`${API_URL}/api/auth/admin`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-
         const userData = response.data;
 
         if (!userData.staff) {
@@ -53,14 +46,11 @@ export default function UserDetails({ id }) {
             headers: { Authorization: `Bearer ${token}` },
           }
         );
-
         setUser(userResponse.data);
       } catch (error) {
         console.error("Error verifying token or fetching user:", error);
         setError("An error occurred. Please try again.");
-        if (error.response?.status === 401) {
-          router.push("/login");
-        }
+        if (error.response?.status === 401) router.push("/login");
       } finally {
         setLoading(false);
       }
@@ -69,107 +59,87 @@ export default function UserDetails({ id }) {
     checkAuthAndFetchData();
   }, [id, router]);
 
-  const handleDeposit = () => {
-    setModalOpen(true);
-  };
+  const handleDeposit = () => setModalOpen(true);
+  const handleEdit = () => setEditModalOpen(true);
 
   const handleSuspend = async () => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-      return;
-    }
+    if (!token) return router.push("/login");
 
     try {
       await axios.post(
         `${API_URL}/api/admin/suspend`,
         { phone: user.phone },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-
       setNotification({
         message: "User Suspended Successfully",
         type: "success",
       });
-    } catch (error) {
+    } catch {
       setNotification({ message: "User unsuspended", type: "error" });
     }
   };
 
   const handleBan = async () => {
     const token = localStorage.getItem("token");
-    if (!token) {
-      router.push("/login");
-      return;
-    }
+    if (!token) return router.push("/login");
 
     try {
       await axios.post(
         `${API_URL}/api/admin/ban`,
         { phone: user.phone },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-
       setNotification({ message: "User Banned Successfully", type: "success" });
-    } catch (error) {
+    } catch {
       setNotification({ message: "User unbanned", type: "error" });
     }
   };
 
-  const handleViewTransactions = () => {
+  const handleViewTransactions = () =>
     router.push(`/admin/transactions?phone=${user.phone}`);
-  };
+  const handleViewPlays = () => router.push(`/admin/plays?phone=${user.phone}`);
 
-  const handleViewPlays = () => {
-    router.push(`/admin/plays?phone=${user.phone}`);
-  };
-
-  const handleEdit = () => {
-    setEditModalOpen(true);
-  };
-
-  if (loading) return <div className="p-6 text-gray-600">Loading...</div>;
-  if (error) return <div className="p-6 text-red-600">{error}</div>;
+  if (loading)
+    return <div className="p-6 text-center text-gray-400">Loading...</div>;
+  if (error) return <div className="p-6 text-center text-red-500">{error}</div>;
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-[#092335] min-h-screen text-white">
       {/* Action Buttons */}
       <div className="flex flex-wrap gap-3 mb-6">
         <button
           onClick={handleDeposit}
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md"
         >
           Deposit
         </button>
         <button
           onClick={handleEdit}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md"
         >
           Edit
         </button>
         <button
           onClick={handleSuspend}
-          className="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700"
+          className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-md"
         >
           Suspend
         </button>
         <button
           onClick={handleBan}
-          className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
+          className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md"
         >
           Ban
         </button>
       </div>
 
       {/* User Info Card */}
-      <div className="bg-white shadow-md rounded-lg p-6 mb-8">
-        <h4 className="text-2xl font-bold mb-4">User Details</h4>
+      <div className="bg-[#0f2d46] shadow-md rounded-lg p-6 mb-8 border border-[#333b44]">
+        <h4 className="text-2xl font-bold mb-4 text-[#38bdf8]">User Details</h4>
         {user && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-300">
             <p>
               <strong>Balance:</strong> {user.balance}
             </p>
@@ -213,7 +183,14 @@ export default function UserDetails({ id }) {
               <strong>Daily Wins:</strong> {user.daily_wins}
             </p>
             <p>
-              <strong>Daily Profit:</strong> {user.daily_profit.toFixed(1)}
+              <strong>Daily Profit:</strong>{" "}
+              <span
+                className={
+                  user.daily_profit >= 0 ? "text-green-400" : "text-red-400"
+                }
+              >
+                {user.daily_profit.toFixed(1)}
+              </span>
             </p>
             <p>
               <strong>Played Today:</strong> {user.played_today}
@@ -231,13 +208,13 @@ export default function UserDetails({ id }) {
       <div className="flex gap-4">
         <button
           onClick={handleViewTransactions}
-          className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+          className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md"
         >
           View Transactions
         </button>
         <button
           onClick={handleViewPlays}
-          className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700"
+          className="px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-md"
         >
           View Plays
         </button>
@@ -264,13 +241,13 @@ export default function UserDetails({ id }) {
         phone={user?.phone}
         initialBalance={user?.balance}
         initialLimit={user?.withdrawal_limit}
-        onSubmit={(result) => {
+        onSubmit={(result) =>
           setUser({
             ...user,
             balance: result.balance,
             withdrawal_limit: result.withdrawal_limit,
-          });
-        }}
+          })
+        }
       />
     </div>
   );

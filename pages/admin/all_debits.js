@@ -1,20 +1,23 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../utils/config";
 import { useRouter } from "next/router";
 
 export default function AllDebits() {
-  const [users, setUsers] = useState([]);
+  const [debits, setDebits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
-  const usersPerPage = 100;
+
+  const debitsPerPage = 100;
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchDebits = async () => {
       const token = localStorage.getItem("token");
 
       if (!token) {
@@ -23,7 +26,7 @@ export default function AllDebits() {
       }
 
       try {
-        // Verify token and check if user is an admin/staff
+        // Verify admin/staff
         const authResponse = await axios.get(`${API_URL}/api/auth/admin`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -34,20 +37,17 @@ export default function AllDebits() {
           return;
         }
 
-        // Fetch all debits from the API
-        const usersResponse = await axios.get(
-          `${API_URL}/api/admin/all_debits`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-            params: { page: currentPage, limit: usersPerPage },
-          }
-        );
+        // Fetch debits with pagination
+        const response = await axios.get(`${API_URL}/api/admin/all_debits`, {
+          headers: { Authorization: `Bearer ${token}` },
+          params: { page: currentPage, limit: debitsPerPage },
+        });
 
-        setUsers(usersResponse.data.debits || []);
-        setTotalPages(usersResponse.data.totalPages || 1);
-        setTotalCount(usersResponse.data.totalCount || 0);
+        setDebits(response.data.debits || []);
+        setTotalPages(response.data.totalPages || 1);
+        setTotalCount(response.data.totalCount || 0);
       } catch (err) {
-        console.error("Error fetching data:", err);
+        console.error("Error fetching debits:", err);
         setError("Failed to fetch debits. Please try again later.");
         router.push("/login");
       } finally {
@@ -55,65 +55,65 @@ export default function AllDebits() {
       }
     };
 
-    fetchUsers();
+    fetchDebits();
   }, [currentPage, router]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
-  if (loading) return <div className="p-6 text-gray-600">Loading...</div>;
-  if (error) return <div className="p-6 text-red-600">{error}</div>;
+  if (loading) return <div className="p-6 text-white">Loading...</div>;
+  if (error) return <div className="p-6 text-red-500">{error}</div>;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-2xl font-bold mb-4">Recent Debits</h1>
-
-      <div className="mb-4">
-        <strong className="text-gray-700">Total Debits: {totalCount}</strong>
-      </div>
+    <div className="p-6 min-h-screen bg-[#092335] text-white">
+      <h1 className="text-xl font-bold text-[#a21cf0] mb-2">
+        💳 Recent Debits
+      </h1>
+      <p className="mb-6 text-gray-300">
+        Total Debits:{" "}
+        <span className="font-semibold text-white">{totalCount}</span>
+      </p>
 
       {/* Table */}
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        <table className="min-w-full border border-gray-200 text-sm">
-          <thead className="bg-gray-100 text-gray-700">
-            <tr>
-              <th className="px-4 py-2 text-left border-b">Receiver</th>
-              <th className="px-4 py-2 text-left border-b">Code</th>
-              <th className="px-4 py-2 text-left border-b">Amount</th>
-              <th className="px-4 py-2 text-left border-b">Balance</th>
-              <th className="px-4 py-2 text-left border-b">Date</th>
+      <div className="overflow-x-auto shadow-lg border border-[#333b44] rounded-lg bg-[#0f2d46]">
+        <table className="min-w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-[#303d4a] text-left text-white text-xs uppercase tracking-wider">
+              <th className="px-4 py-3 border-b border-[#333b44]">Receiver</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Code</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Amount</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Balance</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Date</th>
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(users) && users.length > 0 ? (
-              users.map((user, index) => (
+            {Array.isArray(debits) && debits.length > 0 ? (
+              debits.map((debit, index) => (
                 <tr
                   key={index}
-                  className={`${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  } hover:bg-gray-100`}
+                  className="odd:bg-[#092335] even:bg-[#0f2d46] hover:bg-[#2a2f36] transition"
                 >
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.receiver}
+                  <td className="px-4 py-3 border-b border-[#333b44]">
+                    {debit.receiver}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.txn}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-blue-400 font-medium">
+                    {debit.txn}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.amount}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-yellow-300 font-medium">
+                    {debit.amount}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.balance}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-green-400">
+                    {debit.balance}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-600">
-                    {user.date}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-gray-400">
+                    {debit.date}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="5" className="px-4 py-4 text-center text-gray-500">
+                <td colSpan={5} className="px-4 py-6 text-center text-gray-400">
                   No debits found.
                 </td>
               </tr>
@@ -123,33 +123,24 @@ export default function AllDebits() {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between mt-6">
+      <div className="flex justify-between items-center mt-6">
         <button
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
-          className={`px-4 py-2 rounded ${
-            currentPage === 1
-              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-              : "bg-indigo-600 text-white hover:bg-indigo-700"
-          }`}
+          className="px-4 py-2 bg-[#303d4a] text-white rounded-lg disabled:opacity-50 hover:bg-[#2a2f36] transition"
         >
-          Previous
+          ← Previous
         </button>
-
-        <span className="text-sm text-gray-700">
-          Page {currentPage} of {totalPages}
+        <span className="text-sm text-gray-300">
+          Page <span className="font-semibold text-white">{currentPage}</span>{" "}
+          of {totalPages}
         </span>
-
         <button
           disabled={currentPage === totalPages}
           onClick={() => handlePageChange(currentPage + 1)}
-          className={`px-4 py-2 rounded ${
-            currentPage === totalPages
-              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-              : "bg-indigo-600 text-white hover:bg-indigo-700"
-          }`}
+          className="px-4 py-2 bg-[#303d4a] text-white rounded-lg disabled:opacity-50 hover:bg-[#2a2f36] transition"
         >
-          Next
+          Next →
         </button>
       </div>
     </div>

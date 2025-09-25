@@ -53,7 +53,7 @@ const UserLinkModal = ({ isOpen, onClose, userLink }) => {
 
   return (
     <div className="modal-overlay fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-      <div className="bg-white rounded-lg shadow-lg w-96 p-6 relative">
+      <div className="bg-background rounded-lg shadow-lg w-96 p-6 relative">
         <h4 className="text-lg font-bold mb-4 text-center text-gray-800">
           CONTACT US
         </h4>

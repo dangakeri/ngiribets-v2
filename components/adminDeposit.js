@@ -62,44 +62,50 @@ const Modal = ({ isOpen, onClose, phone }) => {
         body: JSON.stringify(body),
       });
       const result = await response.json();
-      setResponse(result.message || "Submission successful");
+      setResponse(result.message || "✅ Deposit successful");
     } catch (error) {
-      setResponse("Error submitting data");
+      setResponse("❌ Error submitting deposit");
     } finally {
       setLoading(false);
       if (responseTimer) clearTimeout(responseTimer);
       const timer = setTimeout(() => {
         setResponse("");
-      }, 5000);
+        onClose();
+      }, 4000);
       setResponseTimer(timer);
     }
   };
 
   return (
-    <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white dark:bg-gray-900 rounded-lg shadow-lg w-full max-w-md p-6 relative">
-        <h4 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-100">
-          Deposit
-        </h4>
+    <div className="modal-overlay fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+      <div className="bg-[#092335] rounded-lg shadow-xl w-full max-w-md p-6 border border-[#1f3547] relative">
+        {/* Title */}
+        <h4 className="text-lg font-bold mb-4 text-[#38bdf8]">💰 Deposit</h4>
+
+        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="number"
             name="depositAmount"
             value={depositAmount}
             onChange={handleChange}
-            placeholder="Enter amount"
-            className="w-full border border-gray-300 dark:border-gray-700 rounded-md px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            placeholder="Enter deposit amount"
+            className="w-full border border-[#1f3547] bg-[#0f2d46] text-white rounded-md px-3 py-2 text-sm focus:ring focus:ring-[#38bdf8]/30 focus:border-[#38bdf8] outline-none"
             required
           />
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md text-sm font-medium transition disabled:opacity-50"
+            className="w-full bg-[#38bdf8] hover:bg-[#2aa8d4] text-white py-2 px-4 rounded-md text-sm font-semibold transition disabled:opacity-50"
             disabled={loading}
           >
-            {loading ? "Loading..." : "Deposit"}
+            {loading ? "Processing..." : "Deposit"}
           </button>
           {response && (
-            <div className="text-sm text-center mt-2 text-gray-700 dark:text-gray-300">
+            <div
+              className={`text-sm text-center mt-2 font-medium ${
+                response.startsWith("✅") ? "text-green-400" : "text-red-400"
+              }`}
+            >
               {response}
             </div>
           )}
@@ -108,7 +114,7 @@ const Modal = ({ isOpen, onClose, phone }) => {
         {/* Close button */}
         <button
           onClick={onClose}
-          className="absolute top-3 right-3 text-gray-400 hover:text-gray-600 dark:hover:text-gray-200"
+          className="absolute top-3 right-3 text-gray-400 hover:text-gray-200"
         >
           ✕
         </button>

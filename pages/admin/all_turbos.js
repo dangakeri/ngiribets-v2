@@ -30,7 +30,7 @@ export default function AllUsers() {
           return;
         }
 
-        // Fetch turbo data
+        // Fetch Turbo data
         const usersResponse = await axios.get(
           `${API_URL}/api/admin/all_turbos`,
           {
@@ -40,7 +40,7 @@ export default function AllUsers() {
         setUsers(usersResponse.data || []);
       } catch (err) {
         console.error("Error fetching data:", err);
-        setError("Failed to fetch turbo data. Please try again later.");
+        setError("Failed to fetch Turbo data. Please try again later.");
         router.push("/login");
       } finally {
         setLoading(false);
@@ -50,21 +50,22 @@ export default function AllUsers() {
     fetchUsers();
   }, [router]);
 
-  if (loading) return <div className="p-6 text-gray-600">Loading...</div>;
-  if (error) return <div className="p-6 text-red-600">{error}</div>;
+  if (loading)
+    return <div className="p-6 text-center text-gray-400">Loading...</div>;
+  if (error) return <div className="p-6 text-center text-red-500">{error}</div>;
 
   return (
-    <div className="p-6">
-      <h5 className="text-lg font-semibold text-gray-800 mb-4">Turbo Data</h5>
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-[#092335] min-h-screen text-white">
+      <h1 className="text-2xl font-bold mb-6 text-[#a21cf0]">⚡ Turbo Data</h1>
 
-      <div className="overflow-x-auto shadow border border-gray-200 rounded">
-        <table className="min-w-full border-collapse text-sm">
-          <thead>
-            <tr className="bg-gray-100 text-left text-gray-700">
-              <th className="px-4 py-2 border-b">Day</th>
-              <th className="px-4 py-2 border-b">Wager</th>
-              <th className="px-4 py-2 border-b">Wins</th>
-              <th className="px-4 py-2 border-b">Profit</th>
+      <div className="overflow-x-auto shadow-md rounded-lg border border-[#333b44] bg-[#0f2d46]">
+        <table className="min-w-full text-sm text-left text-gray-300">
+          <thead className="bg-[#303d4a] text-white uppercase text-xs">
+            <tr>
+              <th className="px-4 py-3 border-b border-[#333b44]">Day</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Wager</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Wins</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Profit</th>
             </tr>
           </thead>
           <tbody>
@@ -72,16 +73,22 @@ export default function AllUsers() {
               users.map((user, index) => (
                 <tr
                   key={index}
-                  className="odd:bg-white even:bg-gray-50 hover:bg-gray-100"
+                  className={`${
+                    index % 2 === 0 ? "bg-[#092335]" : "bg-[#0f2d46]"
+                  } hover:bg-[#2a2f36] transition`}
                 >
-                  <td className="px-4 py-2 border-b">{user.day}</td>
-                  <td className="px-4 py-2 border-b">
+                  <td className="px-4 py-2 border-b border-[#333b44]">
+                    {user.day}
+                  </td>
+                  <td className="px-4 py-2 border-b border-[#333b44]">
                     {user.wager.toFixed(1)}
                   </td>
-                  <td className="px-4 py-2 border-b">{user.wins.toFixed(1)}</td>
+                  <td className="px-4 py-2 border-b border-[#333b44]">
+                    {user.wins.toFixed(1)}
+                  </td>
                   <td
-                    className={`px-4 py-2 border-b font-medium ${
-                      user.profit >= 0 ? "text-green-600" : "text-red-600"
+                    className={`px-4 py-2 border-b border-[#333b44] font-medium ${
+                      user.profit >= 0 ? "text-green-400" : "text-red-400"
                     }`}
                   >
                     {user.profit.toFixed(1)}
@@ -90,8 +97,8 @@ export default function AllUsers() {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="px-4 py-4 text-center text-gray-500">
-                  No turbo data found.
+                <td colSpan="4" className="px-4 py-4 text-center text-gray-400">
+                  No Turbo data found.
                 </td>
               </tr>
             )}

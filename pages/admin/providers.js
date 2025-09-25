@@ -96,7 +96,7 @@ export default function AdminHome() {
   };
 
   if (loading) {
-    return <div className="p-6 text-gray-600">Loading...</div>;
+    return <div className="p-6 text-gray-400">Loading...</div>;
   }
 
   const navLinks = [
@@ -110,7 +110,7 @@ export default function AdminHome() {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-[#092335] min-h-screen text-white">
       {/* Search bar */}
       <div className="mb-6 flex items-center space-x-2">
         <input
@@ -118,12 +118,12 @@ export default function AdminHome() {
           placeholder="Search by phone..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="px-3 py-2 border rounded-md flex-1"
+          className="px-3 py-2 border border-[#333b44] bg-[#0f2d46] text-white rounded-md flex-1 focus:outline-none focus:ring-2 focus:ring-[#a21cf0]"
         />
         <button
           onClick={searchUser}
           disabled={searching}
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 disabled:bg-gray-400"
+          className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 disabled:bg-gray-500"
         >
           {searching ? "Searching..." : "Search"}
         </button>
@@ -140,10 +140,12 @@ export default function AdminHome() {
           <Link
             key={idx}
             href={link.href}
-            className="flex justify-between items-center px-4 py-3 border rounded-md shadow-sm hover:bg-gray-50 text-green-700 font-medium"
+            className="flex justify-between items-center px-5 py-4 border border-[#333b44] bg-[#0f2d46] rounded-lg shadow hover:bg-[#2a2f36] text-[#a21cf0] font-semibold transition"
           >
             <span>{link.label}</span>
-            <span className="text-lg">→</span>
+            <span className="text-lg text-gray-300 group-hover:text-white">
+              →
+            </span>
           </Link>
         ))}
       </div>
@@ -152,7 +154,7 @@ export default function AdminHome() {
       <div className="mt-8">
         <Link
           href="/admin"
-          className="px-4 py-2 bg-gray-700 text-white rounded hover:bg-gray-800"
+          className="px-4 py-2 bg-[#303d4a] text-white rounded-md hover:bg-[#2a2f36]"
         >
           Back
         </Link>

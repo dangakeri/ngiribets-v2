@@ -5,13 +5,13 @@ import { API_URL } from "../../utils/config";
 import { useRouter } from "next/router";
 
 export default function AllUsers() {
-  const [users, setUsers] = useState([]);
+  const [dailyData, setDailyData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchDailyData = async () => {
       const token = localStorage.getItem("token");
 
       if (!token) {
@@ -20,7 +20,7 @@ export default function AllUsers() {
       }
 
       try {
-        // Verify token and check if user is an admin/staff
+        // Verify admin/staff
         const authResponse = await axios.get(`${API_URL}/api/auth/admin`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -31,11 +31,11 @@ export default function AllUsers() {
           return;
         }
 
-        // Fetch Daily Data
-        const usersResponse = await axios.get(`${API_URL}/api/admin/all_data`, {
+        // Fetch daily data
+        const response = await axios.get(`${API_URL}/api/admin/all_data`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setUsers(usersResponse.data);
+        setDailyData(response.data);
       } catch (err) {
         console.error("Error fetching data:", err);
         setError("Failed to fetch daily data. Please try again later.");
@@ -45,68 +45,75 @@ export default function AllUsers() {
       }
     };
 
-    fetchUsers();
+    fetchDailyData();
   }, [router]);
 
-  if (loading) return <div className="p-6 text-gray-600">Loading...</div>;
-  if (error) return <div className="p-6 text-red-600">{error}</div>;
+  if (loading) return <div className="p-6 text-white">Loading...</div>;
+  if (error) return <div className="p-6 text-red-500">{error}</div>;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-2xl font-bold mb-6">Daily Data</h1>
+    <div className="p-6 min-h-screen bg-[#092335] text-white">
+      <h1 className="text-2xl font-bold text-[#a21cf0] mb-6">📊 Daily Data</h1>
 
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        <table className="min-w-full border border-gray-200 text-sm">
-          <thead className="bg-gray-100 text-gray-700">
-            <tr>
-              <th className="px-4 py-2 text-left border-b">Day</th>
-              <th className="px-4 py-2 text-left border-b">Balance</th>
-              <th className="px-4 py-2 text-left border-b">Credits</th>
-              <th className="px-4 py-2 text-left border-b">Debits</th>
-              <th className="px-4 py-2 text-left border-b">Profit</th>
-              <th className="px-4 py-2 text-left border-b">Status</th>
-              <th className="px-4 py-2 text-left border-b">Cashbacks</th>
+      {/* Table */}
+      <div className="overflow-x-auto shadow-lg border border-[#333b44] rounded-lg bg-[#0f2d46]">
+        <table className="min-w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-[#303d4a] text-left text-white text-xs uppercase tracking-wider">
+              <th className="px-4 py-3 border-b border-[#333b44]">Day</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Balance</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Credits</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Debits</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Profit</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Status</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Cashbacks</th>
             </tr>
           </thead>
           <tbody>
-            {users.length > 0 ? (
-              users.map((user, index) => (
+            {Array.isArray(dailyData) && dailyData.length > 0 ? (
+              dailyData.map((row, index) => (
                 <tr
                   key={index}
-                  className={`${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  } hover:bg-gray-100`}
+                  className="odd:bg-[#092335] even:bg-[#0f2d46] hover:bg-[#2a2f36] transition"
                 >
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.day}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-gray-300">
+                    {row.day}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.balance}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-green-400 font-medium">
+                    {row.balance}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.deposits}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-blue-400">
+                    {row.deposits}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.withdrawals}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-yellow-300">
+                    {row.withdrawals}
                   </td>
                   <td
-                    className={`px-4 py-2 border-b font-medium ${
-                      user.profit >= 0 ? "text-green-600" : "text-red-600"
+                    className={`px-4 py-3 border-b border-[#333b44] font-semibold ${
+                      row.profit >= 0 ? "text-green-400" : "text-red-400"
                     }`}
                   >
-                    {user.profit}
+                    {row.profit}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.status ? "Closed" : "Open"}
+                  <td className="px-4 py-3 border-b border-[#333b44]">
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                        row.status
+                          ? "bg-gray-500/30 text-gray-300"
+                          : "bg-green-500/20 text-green-400"
+                      }`}
+                    >
+                      {row.status ? "Closed" : "Open"}
+                    </span>
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.refund}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-purple-300">
+                    {row.refund}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="7" className="px-4 py-4 text-center text-gray-500">
+                <td colSpan={7} className="px-4 py-6 text-center text-gray-400">
                   No daily data found.
                 </td>
               </tr>

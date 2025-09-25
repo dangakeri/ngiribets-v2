@@ -10,6 +10,7 @@ export default function AllTransactions() {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalTransactions, setTotalTransactions] = useState(0);
+
   const transactionsPerPage = 100;
   const router = useRouter();
 
@@ -23,7 +24,7 @@ export default function AllTransactions() {
       }
 
       try {
-        // Verify token and check if user is staff
+        // Verify token and staff role
         const authResponse = await axios.get(`${API_URL}/api/auth/admin`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -61,26 +62,30 @@ export default function AllTransactions() {
     setCurrentPage(newPage);
   };
 
-  if (loading) return <div className="p-6 text-gray-600">Loading...</div>;
-  if (error) return <div className="p-6 text-red-600">{error}</div>;
+  if (loading) return <div className="p-6 text-white">Loading...</div>;
+  if (error) return <div className="p-6 text-red-500">{error}</div>;
 
   return (
-    <div className="p-6">
-      <h5 className="text-lg font-semibold text-gray-800 mb-2">Transactions</h5>
-      <p className="text-sm text-gray-600 mb-4">
-        Total Transactions: {totalTransactions}
+    <div className="p-6 min-h-screen bg-[#092335] text-white">
+      <h5 className="text-xl font-semibold text-[#a21cf0] mb-2">
+        💳 Transactions
+      </h5>
+      <p className="text-sm text-gray-300 mb-6">
+        Total Transactions:{" "}
+        <span className="font-semibold text-white">{totalTransactions}</span>
       </p>
 
-      <div className="overflow-x-auto shadow border border-gray-200 rounded">
+      {/* Table */}
+      <div className="overflow-x-auto shadow-lg border border-[#333b44] rounded-lg bg-[#0f2d46]">
         <table className="min-w-full border-collapse text-sm">
           <thead>
-            <tr className="bg-gray-100 text-left text-gray-700">
-              <th className="px-4 py-2 border-b">Name</th>
-              <th className="px-4 py-2 border-b">Phone</th>
-              <th className="px-4 py-2 border-b">Action</th>
-              <th className="px-4 py-2 border-b">Amount</th>
-              <th className="px-4 py-2 border-b">Balance</th>
-              <th className="px-4 py-2 border-b">Date</th>
+            <tr className="bg-[#303d4a] text-left text-white text-xs uppercase tracking-wider">
+              <th className="px-4 py-3 border-b border-[#333b44]">Name</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Phone</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Action</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Amount</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Balance</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Date</th>
             </tr>
           </thead>
           <tbody>
@@ -88,19 +93,41 @@ export default function AllTransactions() {
               transactions.map((tx, index) => (
                 <tr
                   key={index}
-                  className="odd:bg-white even:bg-gray-50 hover:bg-gray-100"
+                  className="odd:bg-[#092335] even:bg-[#0f2d46] hover:bg-[#2a2f36] transition"
                 >
-                  <td className="px-4 py-2 border-b">{tx.name}</td>
-                  <td className="px-4 py-2 border-b">{tx.phone}</td>
-                  <td className="px-4 py-2 border-b">{tx.action}</td>
-                  <td className="px-4 py-2 border-b">{tx.amount}</td>
-                  <td className="px-4 py-2 border-b">{tx.balance}</td>
-                  <td className="px-4 py-2 border-b">{tx.date}</td>
+                  <td className="px-4 py-3 border-b border-[#333b44]">
+                    {tx.name}
+                  </td>
+                  <td className="px-4 py-3 border-b border-[#333b44]">
+                    {tx.phone}
+                  </td>
+                  <td className="px-4 py-3 border-b border-[#333b44]">
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                        tx.action?.toLowerCase() === "deposit"
+                          ? "bg-green-500/20 text-green-400"
+                          : tx.action?.toLowerCase() === "withdrawal"
+                          ? "bg-red-500/20 text-red-400"
+                          : "bg-blue-500/20 text-blue-400"
+                      }`}
+                    >
+                      {tx.action}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 border-b border-[#333b44] font-medium text-yellow-300">
+                    {tx.amount}
+                  </td>
+                  <td className="px-4 py-3 border-b border-[#333b44] text-green-400">
+                    {tx.balance}
+                  </td>
+                  <td className="px-4 py-3 border-b border-[#333b44] text-gray-400">
+                    {tx.date}
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="px-4 py-4 text-center text-gray-500">
+                <td colSpan={6} className="px-4 py-6 text-center text-gray-400">
                   No transactions found.
                 </td>
               </tr>
@@ -110,23 +137,24 @@ export default function AllTransactions() {
       </div>
 
       {/* Pagination */}
-      <div className="flex justify-between items-center mt-4">
+      <div className="flex justify-between items-center mt-6">
         <button
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
-          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+          className="px-4 py-2 bg-[#303d4a] text-white rounded-lg disabled:opacity-50 hover:bg-[#2a2f36] transition"
         >
-          Previous
+          ← Previous
         </button>
-        <span className="text-sm text-gray-700">
-          Page {currentPage} of {totalPages}
+        <span className="text-sm text-gray-300">
+          Page <span className="font-semibold text-white">{currentPage}</span>{" "}
+          of {totalPages}
         </span>
         <button
           disabled={currentPage === totalPages}
           onClick={() => handlePageChange(currentPage + 1)}
-          className="px-4 py-2 bg-gray-200 rounded disabled:opacity-50"
+          className="px-4 py-2 bg-[#303d4a] text-white rounded-lg disabled:opacity-50 hover:bg-[#2a2f36] transition"
         >
-          Next
+          Next →
         </button>
       </div>
     </div>

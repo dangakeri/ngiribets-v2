@@ -50,13 +50,14 @@ const Transactions = () => {
     fetchTransactions();
   }, [phone]);
 
-  if (loading) return <div className="p-6 text-gray-700">Loading...</div>;
-  if (error) return <div className="p-6 text-red-500">{error}</div>;
+  if (loading)
+    return <div className="p-6 text-center text-gray-400">Loading...</div>;
+  if (error) return <div className="p-6 text-center text-red-500">{error}</div>;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">
-        Transactions for {phone}
+    <div className="min-h-screen bg-[#092335] text-white p-6">
+      <h1 className="text-2xl font-bold text-[#38bdf8] mb-6">
+        💳 Transactions for {phone}
       </h1>
 
       <div className="space-y-4">
@@ -64,26 +65,33 @@ const Transactions = () => {
           transactions.map((transaction) => (
             <div
               key={transaction._id}
-              className="flex justify-between items-center bg-white shadow-sm rounded-lg p-4 border border-gray-200 hover:shadow-md transition"
+              className="flex justify-between items-center bg-[#0f2d46] border border-[#1f3547] rounded-lg p-4 shadow hover:bg-[#13314f] transition"
             >
+              {/* Left side */}
               <div>
-                <div className="font-semibold text-gray-700">
+                <div className="font-semibold text-white">
                   {transaction.action}
                 </div>
-                <div className="text-sm text-gray-500">{transaction.date}</div>
+                <div className="text-xs text-gray-400">{transaction.date}</div>
               </div>
+
+              {/* Right side */}
               <div className="text-right">
-                <div className="text-lg font-bold text-gray-800">
+                <div
+                  className={`text-lg font-bold ${
+                    transaction.amount >= 0 ? "text-green-400" : "text-red-400"
+                  }`}
+                >
                   {transaction.amount.toFixed(2)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-gray-400">
                   Bal: {transaction.balance}
                 </div>
               </div>
             </div>
           ))
         ) : (
-          <p className="text-gray-600">No transactions found.</p>
+          <p className="text-gray-400">No transactions found.</p>
         )}
       </div>
 

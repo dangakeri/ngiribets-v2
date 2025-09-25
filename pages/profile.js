@@ -112,7 +112,7 @@ const Profile = () => {
               <button
                 key={item.title}
                 onClick={item.action}
-                className="flex-1 py-3 font-bold rounded-xl shadow-md bg-white text-[#a21cf0] hover:bg-white/90"
+                className="flex-1 py-3 font-bold rounded-xl shadow-md bg-background text-[#a21cf0] hover:bg-background/90"
               >
                 {item.title}
               </button>

@@ -1,4 +1,3 @@
-// pages/admin/all_users.js
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { API_URL } from "../../utils/config";
@@ -51,21 +50,22 @@ export default function AllUsers() {
     fetchUsers();
   }, [router]);
 
-  if (loading) return <div className="p-6 text-gray-600">Loading...</div>;
-  if (error) return <div className="p-6 text-red-600">{error}</div>;
+  if (loading)
+    return <div className="p-6 text-center text-gray-400">Loading...</div>;
+  if (error) return <div className="p-6 text-center text-red-500">{error}</div>;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-2xl font-bold mb-6">Sports Data</h1>
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 bg-[#092335] min-h-screen text-white">
+      <h1 className="text-2xl font-bold mb-6 text-[#a21cf0]">⚽ Sports Data</h1>
 
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        <table className="min-w-full border border-gray-200 text-sm">
-          <thead className="bg-gray-100 text-gray-700">
+      <div className="overflow-x-auto shadow-md rounded-lg border border-[#333b44] bg-[#0f2d46]">
+        <table className="min-w-full text-sm text-left text-gray-300">
+          <thead className="bg-[#303d4a] text-white uppercase text-xs">
             <tr>
-              <th className="px-4 py-2 text-left border-b">Day</th>
-              <th className="px-4 py-2 text-left border-b">Wager</th>
-              <th className="px-4 py-2 text-left border-b">Wins</th>
-              <th className="px-4 py-2 text-left border-b">Profit</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Day</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Wager</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Wins</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Profit</th>
             </tr>
           </thead>
           <tbody>
@@ -73,19 +73,21 @@ export default function AllUsers() {
               <tr
                 key={index}
                 className={`${
-                  index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                } hover:bg-gray-100`}
+                  index % 2 === 0 ? "bg-[#092335]" : "bg-[#0f2d46]"
+                } hover:bg-[#2a2f36] transition`}
               >
-                <td className="px-4 py-2 border-b text-gray-800">{user.day}</td>
-                <td className="px-4 py-2 border-b text-gray-800">
+                <td className="px-4 py-2 border-b border-[#333b44]">
+                  {user.day}
+                </td>
+                <td className="px-4 py-2 border-b border-[#333b44]">
                   {user.wager.toFixed(1)}
                 </td>
-                <td className="px-4 py-2 border-b text-gray-800">
+                <td className="px-4 py-2 border-b border-[#333b44]">
                   {user.wins.toFixed(1)}
                 </td>
                 <td
-                  className={`px-4 py-2 border-b font-medium ${
-                    user.profit >= 0 ? "text-green-600" : "text-red-600"
+                  className={`px-4 py-2 border-b border-[#333b44] font-medium ${
+                    user.profit >= 0 ? "text-green-400" : "text-red-400"
                   }`}
                 >
                   {user.profit.toFixed(1)}

@@ -44,7 +44,7 @@ const InstallButton = () => {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-white shadow-lg rounded-lg p-3 border flex flex-col items-center gap-3 z-50">
+    <div className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] max-w-md bg-background shadow-lg rounded-lg p-3 border flex flex-col items-center gap-3 z-50">
       {/* Install Button */}
       <button
         onClick={handleInstallClick}

@@ -3,18 +3,19 @@ import axios from "axios";
 import { API_URL } from "../../utils/config";
 import { useRouter } from "next/router";
 
-export default function AllUsers() {
-  const [users, setUsers] = useState([]);
+export default function AllPlays() {
+  const [plays, setPlays] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [totalTransactions, setTotalTransactions] = useState(0);
-  const transactionsPerPage = 100;
+  const [totalPlays, setTotalPlays] = useState(0);
+
+  const playsPerPage = 100;
   const router = useRouter();
 
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchPlays = async () => {
       const token = localStorage.getItem("token");
 
       if (!token) {
@@ -23,7 +24,7 @@ export default function AllUsers() {
       }
 
       try {
-        // Verify token and check if user is an admin/staff
+        // Verify token and check if user is staff
         const authResponse = await axios.get(`${API_URL}/api/auth/admin`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -35,89 +36,98 @@ export default function AllUsers() {
         }
 
         // Fetch all plays with pagination
-        const usersResponse = await axios.get(
+        const playsResponse = await axios.get(
           `${API_URL}/api/admin/all_plays`,
           {
             headers: { Authorization: `Bearer ${token}` },
-            params: { page: currentPage, limit: transactionsPerPage },
+            params: { page: currentPage, limit: playsPerPage },
           }
         );
 
-        setUsers(usersResponse.data.users || []);
-        setTotalPages(usersResponse.data.totalPages || 1);
-        setTotalTransactions(usersResponse.data.totalTransactions || 0);
+        setPlays(playsResponse.data.users || []);
+        setTotalPages(playsResponse.data.totalPages || 1);
+        setTotalPlays(playsResponse.data.totalTransactions || 0);
       } catch (err) {
-        console.error("Error fetching data:", err);
-        setError("Failed to fetch transactions. Please try again later.");
+        console.error("Error fetching plays:", err);
+        setError("Failed to fetch plays. Please try again later.");
         router.push("/login");
       } finally {
         setLoading(false);
       }
     };
 
-    fetchUsers();
+    fetchPlays();
   }, [currentPage, router]);
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
 
-  if (loading) return <div className="p-6 text-gray-600">Loading...</div>;
-  if (error) return <div className="p-6 text-red-600">{error}</div>;
+  if (loading) return <div className="p-6 text-white">Loading...</div>;
+  if (error) return <div className="p-6 text-red-500">{error}</div>;
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <h1 className="text-2xl font-bold mb-4">All Plays</h1>
-      <p className="mb-4 text-gray-700">
-        <strong>Total Plays: {totalTransactions}</strong>
+    <div className="p-6 min-h-screen bg-[#092335] text-white">
+      <h1 className="text-xl font-bold text-[#a21cf0] mb-2">🎮 All Plays</h1>
+      <p className="mb-6 text-gray-300">
+        Total Plays:{" "}
+        <span className="font-semibold text-white">{totalPlays}</span>
       </p>
 
       {/* Table */}
-      <div className="overflow-x-auto bg-white shadow-md rounded-lg">
-        <table className="min-w-full border border-gray-200 text-sm">
-          <thead className="bg-gray-100 text-gray-700">
-            <tr>
-              <th className="px-4 py-2 text-left border-b">Name</th>
-              <th className="px-4 py-2 text-left border-b">Phone</th>
-              <th className="px-4 py-2 text-left border-b">Action</th>
-              <th className="px-4 py-2 text-left border-b">Amount</th>
-              <th className="px-4 py-2 text-left border-b">Balance</th>
-              <th className="px-4 py-2 text-left border-b">Date</th>
+      <div className="overflow-x-auto shadow-lg border border-[#333b44] rounded-lg bg-[#0f2d46]">
+        <table className="min-w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-[#303d4a] text-left text-white text-xs uppercase tracking-wider">
+              <th className="px-4 py-3 border-b border-[#333b44]">Name</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Phone</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Action</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Amount</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Balance</th>
+              <th className="px-4 py-3 border-b border-[#333b44]">Date</th>
             </tr>
           </thead>
           <tbody>
-            {Array.isArray(users) && users.length > 0 ? (
-              users.map((user, index) => (
+            {Array.isArray(plays) && plays.length > 0 ? (
+              plays.map((play, index) => (
                 <tr
                   key={index}
-                  className={`${
-                    index % 2 === 0 ? "bg-white" : "bg-gray-50"
-                  } hover:bg-gray-100`}
+                  className="odd:bg-[#092335] even:bg-[#0f2d46] hover:bg-[#2a2f36] transition"
                 >
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.name}
+                  <td className="px-4 py-3 border-b border-[#333b44]">
+                    {play.name}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.phone}
+                  <td className="px-4 py-3 border-b border-[#333b44]">
+                    {play.phone}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.action}
+                  <td className="px-4 py-3 border-b border-[#333b44]">
+                    <span
+                      className={`px-2 py-1 rounded-full text-xs font-semibold ${
+                        play.action?.toLowerCase() === "win"
+                          ? "bg-green-500/20 text-green-400"
+                          : play.action?.toLowerCase() === "loss"
+                          ? "bg-red-500/20 text-red-400"
+                          : "bg-blue-500/20 text-blue-400"
+                      }`}
+                    >
+                      {play.action}
+                    </span>
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.amount}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-yellow-300 font-medium">
+                    {play.amount}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-800">
-                    {user.balance}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-green-400">
+                    {play.balance}
                   </td>
-                  <td className="px-4 py-2 border-b text-gray-600">
-                    {user.date}
+                  <td className="px-4 py-3 border-b border-[#333b44] text-gray-400">
+                    {play.date}
                   </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan="6" className="px-4 py-4 text-center text-gray-500">
-                  No transactions found.
+                <td colSpan={6} className="px-4 py-6 text-center text-gray-400">
+                  No plays found.
                 </td>
               </tr>
             )}
@@ -126,33 +136,24 @@ export default function AllUsers() {
       </div>
 
       {/* Pagination */}
-      <div className="flex items-center justify-between mt-6">
+      <div className="flex justify-between items-center mt-6">
         <button
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
-          className={`px-4 py-2 rounded ${
-            currentPage === 1
-              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-              : "bg-indigo-600 text-white hover:bg-indigo-700"
-          }`}
+          className="px-4 py-2 bg-[#303d4a] text-white rounded-lg disabled:opacity-50 hover:bg-[#2a2f36] transition"
         >
-          Previous
+          ← Previous
         </button>
-
-        <span className="text-sm text-gray-700">
-          Page {currentPage} of {totalPages}
+        <span className="text-sm text-gray-300">
+          Page <span className="font-semibold text-white">{currentPage}</span>{" "}
+          of {totalPages}
         </span>
-
         <button
           disabled={currentPage === totalPages}
           onClick={() => handlePageChange(currentPage + 1)}
-          className={`px-4 py-2 rounded ${
-            currentPage === totalPages
-              ? "bg-gray-200 text-gray-500 cursor-not-allowed"
-              : "bg-indigo-600 text-white hover:bg-indigo-700"
-          }`}
+          className="px-4 py-2 bg-[#303d4a] text-white rounded-lg disabled:opacity-50 hover:bg-[#2a2f36] transition"
         >
-          Next
+          Next →
         </button>
       </div>
     </div>

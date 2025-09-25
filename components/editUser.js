@@ -63,31 +63,31 @@ const EditModal = ({
         body: JSON.stringify(body),
       });
       const result = await response.json();
-      setResponse(result.message || "Update successful");
+      setResponse(result.message || "✅ Update successful");
       onSubmit(result);
     } catch (error) {
-      setResponse("Error updating data");
+      setResponse("❌ Error updating data");
     } finally {
       setLoading(false);
       setTimeout(() => {
         setResponse("");
         onClose();
-      }, 5000);
+      }, 4000);
     }
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="modal-overlay fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md relative">
-        <h4 className="text-lg font-semibold mb-4 text-gray-800">
-          Edit User Data
+    <div className="modal-overlay fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
+      <div className="bg-[#092335] rounded-lg shadow-xl p-6 w-full max-w-md border border-[#1f3547]">
+        <h4 className="text-lg font-bold mb-4 text-[#38bdf8]">
+          ✏️ Edit User Data
         </h4>
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Balance Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-300">
               Balance
             </label>
             <input
@@ -97,13 +97,13 @@ const EditModal = ({
               onChange={handleChangeBalance}
               placeholder="Enter balance"
               required
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-yellow-400 focus:ring focus:ring-yellow-200"
+              className="mt-1 block w-full rounded-md border border-[#1f3547] bg-[#0f2d46] text-white px-3 py-2 text-sm shadow-sm focus:border-[#38bdf8] focus:ring focus:ring-[#38bdf8]/30"
             />
           </div>
 
           {/* Withdrawal Limit Field */}
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-300">
               Withdrawal Limit
             </label>
             <input
@@ -113,7 +113,7 @@ const EditModal = ({
               onChange={handleChangeLimit}
               placeholder="Enter withdrawal limit"
               required
-              className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-yellow-400 focus:ring focus:ring-yellow-200"
+              className="mt-1 block w-full rounded-md border border-[#1f3547] bg-[#0f2d46] text-white px-3 py-2 text-sm shadow-sm focus:border-[#38bdf8] focus:ring focus:ring-[#38bdf8]/30"
             />
           </div>
 
@@ -121,14 +121,18 @@ const EditModal = ({
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-2 px-4 rounded-md bg-yellow-400 hover:bg-yellow-500 text-white font-semibold transition disabled:opacity-50"
+            className="w-full py-2 px-4 rounded-md bg-[#38bdf8] hover:bg-[#2aa8d4] text-white font-semibold transition disabled:opacity-50"
           >
-            {loading ? "Loading..." : "Submit"}
+            {loading ? "Saving..." : "Save Changes"}
           </button>
 
           {/* Response Message */}
           {response && (
-            <div className="mt-2 text-sm text-center text-gray-700">
+            <div
+              className={`mt-3 text-sm text-center font-medium ${
+                response.startsWith("✅") ? "text-green-400" : "text-red-400"
+              }`}
+            >
               {response}
             </div>
           )}
