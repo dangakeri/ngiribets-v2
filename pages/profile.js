@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Router from "next/router";
 
 import { FaUserCircle, FaArrowRight, FaSignOutAlt } from "react-icons/fa";
-
+import FooterContent from "../components/footerContent";
 import Footer from "../components/footer";
 import Modal from "../components/Modal";
 import UserLinkModal from "../components/linkModal";
@@ -112,7 +112,7 @@ const Profile = () => {
               <button
                 key={item.title}
                 onClick={item.action}
-                className="flex-1 py-3 font-bold rounded-xl shadow-md bg-background text-[#a21cf0] hover:bg-background/90"
+                className="flex-1 py-3 font-bold border border-white rounded-xl shadow-md bg-background text-white hover:bg-background/90"
               >
                 {item.title}
               </button>
@@ -141,7 +141,7 @@ const Profile = () => {
         </div>
 
         {/* --- Logout --- */}
-        <div className="w-full">
+        <div className="w-full ">
           <button
             onClick={logout}
             className="flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-red-600 text-white hover:bg-red-700 shadow-lg font-semibold w-full"
@@ -151,7 +151,7 @@ const Profile = () => {
           </button>
         </div>
       </div>
-
+      <FooterContent />
       {/* Modals */}
       <Modal
         isOpen={isModalOpen}
