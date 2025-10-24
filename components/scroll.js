@@ -19,14 +19,14 @@ const icons = [
   },
   { type: "image", src: "/images/top.svg", name: "Top Games", path: "/top" },
   { type: "image", src: "/images/imoon.svg", name: "Crash", path: "/crash" },
-  {
-    type: "image",
-    src: "/images/virtual.png",
-    name: "Hot Games",
-    // path: "/games",
-    path: "/casino",
-    // actionData: { ref: "sports", action: "play", provider: "sports" },
-  },
+  // {
+  // type: "image",
+  // src: "/images/virtual.png",
+  // name: "Hot Games",
+  // path: "/games",
+  // path: "/casino",
+  // actionData: { ref: "sports", action: "play", provider: "sports" },
+  // },
   // {
   //   type: "image",
   //   src: "/images/providers.svg",
