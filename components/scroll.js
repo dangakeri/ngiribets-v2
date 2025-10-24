@@ -22,7 +22,7 @@ const icons = [
   {
     type: "image",
     src: "/images/virtual.png",
-    name: "Casino",
+    name: "Hot Games",
     // path: "/games",
     path: "/casino",
     // actionData: { ref: "sports", action: "play", provider: "sports" },
