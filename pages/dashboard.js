@@ -67,10 +67,10 @@ export default function Dashboard() {
   // ];
 
   const banners = [
-    { image: "/images/33.avif", alt: "Banner 1" },
-    { image: "/images/77.avif", alt: "Banner 2" },
-    { image: "/images/44.avif", alt: "Banner 3" },
-    { image: "/images/rains.avif", alt: "Banner 4" },
+    { image: "/banner-1.webp", alt: "Banner 1" },
+    { image: "/banner-2.webp", alt: "Banner 2" },
+    { image: "/banner-3.webp", alt: "Banner 3" },
+    { image: "/banner-4.webp", alt: "Banner 4" },
   ];
 
   return (
