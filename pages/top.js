@@ -11,10 +11,15 @@ import { API_URL } from "../utils/config";
 import FooterContent from "../components/footerContent";
 import Link from "next/link"; // Import the Link component
 import { useUser } from "../contexts/UserContext"; // Import the useUser hook
+// const banners = [
+//   { image: "/images/33.avif", alt: "Banner 1" },
+//   { image: "/images/77.avif", alt: "Banner 2" },
+//   { image: "/images/44.avif", alt: "Banner 3" },
+// ];
 const banners = [
-  { image: "/images/33.avif", alt: "Banner 1" },
-  { image: "/images/77.avif", alt: "Banner 2" },
-  { image: "/images/44.avif", alt: "Banner 3" },
+  { image: "/banner-1.webp", alt: "Banner 1" },
+  { image: "/banner-2.webp", alt: "Banner 2" },
+  { image: "/banner-3.webp", alt: "Banner 3" },
 ];
 
 export default function Dashboard() {
